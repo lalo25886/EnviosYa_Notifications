@@ -5,16 +5,12 @@
  */
 package com.enviosya.notification.domain;
 
-
 import javax.ejb.ActivationConfigProperty;
-import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 import org.apache.log4j.Logger;
-
 
 /**
  *
@@ -23,25 +19,23 @@ import org.apache.log4j.Logger;
 
 @MessageDriven(activationConfig = {
     @ActivationConfigProperty(propertyName = "destinationLookup",
-            propertyValue = "jms/QueueCadete"),
+            propertyValue = "jms/QueueReview"),
     @ActivationConfigProperty(propertyName = "destinationType",
             propertyValue = "javax.jms.Queue")
 })
-public class CadetMessageBean implements MessageListener {
+public class ReviewMessageBean {
 
-    static Logger log = Logger.getLogger("FILE");
+static Logger log = Logger.getLogger("FILE");
 
-    public CadetMessageBean() {
+    public ReviewMessageBean() {
     }
 
-    @Override
     public void onMessage(Message message) {
         try {
-
             TextMessage txt = (TextMessage) message;
             String msg = txt.getText();
            // mailBean.enviarMail(msg);
-            log.info("Mensaje del cadete recibido. Mensaje:" + msg);
+            log.info("Mensaje de review. Mensaje:" + msg);
 
         } catch (JMSException ex) {
             log.error("ERROR:"  + ex.getMessage());
