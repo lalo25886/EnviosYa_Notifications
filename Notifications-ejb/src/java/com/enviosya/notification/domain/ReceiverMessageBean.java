@@ -6,6 +6,7 @@
 package com.enviosya.notification.domain;
 
 import javax.ejb.ActivationConfigProperty;
+import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -25,7 +26,8 @@ import org.apache.log4j.Logger;
             propertyValue = "javax.jms.Queue")
 })
 public class ReceiverMessageBean implements MessageListener {
-
+    @EJB
+    private MailBean mailBean;
     public ReceiverMessageBean() {
     }
      static Logger log =  Logger.getLogger("FILE");
@@ -36,6 +38,7 @@ public class ReceiverMessageBean implements MessageListener {
 
             TextMessage txt = (TextMessage) message;
             String msg = txt.getText();
+            mailBean.enviarMail(msg);
             log.info("Mensaje del Receptor recibido. Mensaje:" + msg);
 
          } catch (JMSException ex) {

@@ -29,6 +29,9 @@ import org.apache.log4j.Logger;
 })
 public class CadetMessageBean implements MessageListener {
 
+    @EJB
+    private MailBean mailBean;
+
     static Logger log = Logger.getLogger("FILE");
 
     public CadetMessageBean() {
@@ -40,7 +43,7 @@ public class CadetMessageBean implements MessageListener {
 
             TextMessage txt = (TextMessage) message;
             String msg = txt.getText();
-           // mailBean.enviarMail(msg);
+            mailBean.enviarMail(msg);
             log.info("Mensaje del cadete recibido. Mensaje:" + msg);
 
         } catch (JMSException ex) {
